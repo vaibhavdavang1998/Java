@@ -1,37 +1,53 @@
+import java.util.Random;
 import java.util.Scanner;
-//Name:Vaibhav Davang
-public class Number_guessing_game{
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int rand = 1 + (int)(100 * Math.random());
+class Game{
+    public int number;
+    public int inputnumber;
+    public int noOfGuesses=0;
+
+ 
+    public int getnumguesses(){
+        return noOfGuesses;
+    }
+    public void setnumguesses(int noOfGuesses){
+        this.noOfGuesses=noOfGuesses;
+    }
+ Game(){
+        Random rand=new Random();
+        this.number=rand.nextInt(100);
         
-        int guess,tries = 5;
-        System.out.println("Number is between 1-100. You have 5 tries to guess the number");
+    }
+ void takeUserInput(){
+        System.out.println("guess the number");
+        Scanner sc=new Scanner(System.in);
+inputnumber=sc.nextInt();
+ }
 
-        for (int i = 0; i < tries; i++) {
-            System.out.print("Guess the number:");
-            guess = scanner.nextInt();
-
-            if (rand > guess  ) {
-                if (i == tries-1) {
-                    System.out.println("Better Luck Next Time. You ran out of tries. Game Over.");
-                    System.out.println("The number was " + rand );
-                    break;
-                }
-                System.out.println("Try a number greater han " + guess);
-            }
-            else if (rand < guess ) {
-                if (i == tries-1) {
-                    System.out.println("Better Luck Next Time. You have ran out of tries. Game Over.");
-                    System.out.println("The number was " + rand );
-                    break;
-                }
-                System.out.println("Try a number smaller than " + guess);
-            }else {
-                System.out.println("Congratulations! You successfully guessed the number.");
-                System.out.println("Your score is " + (tries-i)*10);
-                break;
-            }
+    boolean isCorrectNumber(){
+        noOfGuesses++;
+        if(inputnumber==number){
+            System.out.format("Yes you guessed it right, it was %d\nYou guessed it in %d attempts", number, noOfGuesses);
+            return true;
         }
+        else if(inputnumber<number){
+            System.out.println("Too low...");
+        }
+        else if(inputnumber>number){
+            System.out.println("Too high...");
+        }
+        return false;
+    }
+ 
+}
+public class NumberGussing_Game{
+    public static void main(String[] args) {
+        Game g=new Game();
+        boolean b=false;
+        while(!b){
+        g.takeUserInput();
+        b=g.isCorrectNumber();
+  
+        }
+
     }
 }
